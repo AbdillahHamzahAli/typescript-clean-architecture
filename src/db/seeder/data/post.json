@@ -1,0 +1,16 @@
+[
+  {
+    "title": "post 1",
+    "slug": "post-1",
+    "thumbnail": "https://via.placeholder.com/150",
+    "content": "post 1 content",
+    "authorId": 1
+  },
+  {
+    "title": "post 2",
+    "slug": "post-2",
+    "thumbnail": "https://via.placeholder.com/150",
+    "content": "post 2 content",
+    "authorId": 2
+  }
+]

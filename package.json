@@ -1,0 +1,29 @@
+{
+  "name": "modern-api",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/pg": "^8.15.5",
+    "drizzle-kit": "^0.31.4"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.2",
+    "drizzle-orm": "^0.44.5",
+    "drizzle-seed": "^0.3.1",
+    "pg": "^8.16.3",
+    "winston": "^3.17.0"
+  },
+  "scripts": {
+    "db:generate": "bunx drizzle-kit generate",
+    "db:push": "bunx drizzle-kit push",
+    "db:studio": "bunx drizzle-kit studio",
+    "db:migrate": "bunx drizzle-kit migrate",
+    "db:pull": "bunx drizzle-kit pull",
+    "db:seed": "bun src/db/seeder/seed.ts"
+  }
+}
