@@ -2,7 +2,7 @@ import "dotenv/config";
 import { Pool } from "pg";
 import { drizzle } from "drizzle-orm/node-postgres";
 import type { Logger } from "drizzle-orm/logger";
-import { logger } from "@/shared/logging";
+import { logger } from "@/shared/logging/logging";
 
 const connectionString = process.env.DATABASE_URL;
 if (!connectionString) {

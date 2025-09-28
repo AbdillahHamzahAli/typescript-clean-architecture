@@ -1,6 +1,6 @@
 import type { User } from "@/domain/entities/User";
 
-export interface IUserRespository {
+export interface IUserRepository {
   create(user: User): Promise<User>;
   findByEmail(email: string): Promise<User | null>;
   findAll(): Promise<User[]>;

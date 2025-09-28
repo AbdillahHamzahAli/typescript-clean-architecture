@@ -2,7 +2,8 @@ import type { CreateUser } from "@/application/user/CreateUser";
 import type { DeleteUser } from "@/application/user/DeleteUser";
 import type { GetUsers } from "@/application/user/GetUser";
 import type { UserResponse } from "@/domain/dto/User";
-import { buildResponse } from "@/shared/response";
+import { buildResponseSuccess, buildResponseError } from "@/shared/response/response";
+import { errorToHttp } from "@/shared/errors/httpErrorMapper";
 import { createUserSchema } from "../validators/userValidator";
 
 export class UserController {
@@ -12,28 +13,33 @@ export class UserController {
     try {
       const body = createUserSchema.parse(await req.json());
       const user = await this.createUser.execute(body);
-      return Response.json(buildResponse<UserResponse>("success", "User created", user), { status: 201 });
+      return Response.json(buildResponseSuccess<UserResponse>("success", "User created", user), { status: 201 });
     } catch (err: any) {
-      return Response.json(buildResponse("error", err.message, undefined, err), { status: 400 });
+      const mapped = errorToHttp(err);
+      return Response.json(buildResponseError("error", mapped.message, mapped.error), { status: mapped.status });
     }
   };
 
   list = async (): Promise<Response> => {
-    const users = await this.getUsers.execute();
-    const items: UserResponse[] = users.map((u) => ({
-      id: u.id,
-      name: u.name ?? "",
-      email: u.email,
-      role: u.role,
-    }));
-    return Response.json(buildResponse<UserResponse[]>("success", "Users fetched", items), { status: 200 });
+    try {
+      const users = await this.getUsers.execute();
+      return Response.json(buildResponseSuccess<UserResponse[]>("success", "Users fetched", users), { status: 200 });
+    } catch (err: any) {
+      const mapped = errorToHttp(err);
+      return Response.json(buildResponseError("error", mapped.message, mapped.error), { status: mapped.status });
+    }
   };
 
   delete = async (req: Request): Promise<Response> => {
-    const id = new URL(req.url).searchParams.get("id");
-    if (!id) return Response.json(buildResponse("error", "Missing id"), { status: 400 });
+    try {
+      const id = new URL(req.url).searchParams.get("id");
+      if (!id) return Response.json(buildResponseError("error", "Missing id"), { status: 400 });
 
-    await this.deleteUser.execute(id);
-    return Response.json(buildResponse("success", "User deleted"), { status: 200 });
+      await this.deleteUser.execute(id);
+      return Response.json(buildResponseSuccess("success", "User deleted"), { status: 200 });
+    } catch (err: any) {
+      const mapped = errorToHttp(err);
+      return Response.json(buildResponseError("error", mapped.message, mapped.error), { status: mapped.status });
+    }
   };
 }

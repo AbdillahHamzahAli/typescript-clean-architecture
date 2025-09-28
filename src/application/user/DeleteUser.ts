@@ -1,7 +1,7 @@
-import type { IUserRespository } from "../interfaces/IUserRespository";
+import type { IUserRepository } from "../interfaces/IUserRepository";
 
 export class DeleteUser {
-  constructor(private repo: IUserRespository) {}
+  constructor(private repo: IUserRepository) {}
 
   async execute(id: string) {
     return await this.repo.delete(id);
