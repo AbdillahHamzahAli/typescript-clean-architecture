@@ -1,8 +1,8 @@
-import { roles, type NewRole } from "@/db/schema";
-import { db } from "@/db";
+import { roles, type NewRole } from "@/infrastructure/db/schema";
+import { db } from "@/infrastructure/db/drizzleClient";
 import { eq } from "drizzle-orm";
 
-const path = "src/db/seeder/data/role.json";
+const path = "src/infrastructure/db/seeder/data/role.json";
 const file = Bun.file(path);
 const data = await file.json();
 

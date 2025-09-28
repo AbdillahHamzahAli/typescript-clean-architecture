@@ -1,8 +1,8 @@
 import "dotenv/config";
 import { Pool } from "pg";
 import { drizzle } from "drizzle-orm/node-postgres";
-import type { Logger } from "drizzle-orm";
-import { logger } from "./logging";
+import type { Logger } from "drizzle-orm/logger";
+import { logger } from "@/shared/logging";
 
 const connectionString = process.env.DATABASE_URL;
 if (!connectionString) {
@@ -11,19 +11,17 @@ if (!connectionString) {
 
 class MyLogger implements Logger {
   logQuery(query: string, params: unknown[]): void {
-    logger.debug(query, params);
+    logger.debug(`Query: ${query} -- params: ${params}`);
   }
 
-  logQuerySlow(query: string, params: unknown[], duration: number): void {
-    logger.debug(query, params, duration);
-  }
-
-  logError(error: Error): void {
-    logger.error(error);
+  logQueryError(query: string, params: unknown[], error: Error): void {
+    logger.error(`Query Error: ${query} -- params: ${params} -- error: ${error.message}`);
   }
 }
 
 export const pool = new Pool({ connectionString });
-export const db = drizzle(pool, { logger: new MyLogger() });
+export const db = drizzle(pool, {
+  logger: new MyLogger(),
+});
 
 export type Db = typeof db;

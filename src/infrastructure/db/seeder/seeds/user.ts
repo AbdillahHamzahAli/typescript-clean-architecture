@@ -1,8 +1,8 @@
-import { users, type NewUser } from "@/db/schema";
-import { db } from "@/db";
+import { users, type NewUser } from "@/infrastructure/db/schema";
+import { db } from "@/infrastructure/db/drizzleClient";
 import { eq } from "drizzle-orm";
 
-const path = "src/db/seeder/data/user.json";
+const path = "src/infrastructure/db/seeder/data/user.json";
 const file = Bun.file(path);
 const data = await file.json();
 

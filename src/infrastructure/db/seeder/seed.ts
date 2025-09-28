@@ -1,13 +1,15 @@
 import "dotenv/config";
-import { db, pool } from "../index";
-import { roles, users, posts } from "../schema";
-import { eq } from "drizzle-orm";
-import { seed } from "drizzle-seed";
+
+import { reset } from "drizzle-seed";
+import * as schema from "../schema";
+import { db } from "../drizzleClient";
+
 import { seedRoles } from "./seeds/role";
 import { seedUsers } from "./seeds/user";
 import { seedPosts } from "./seeds/post";
 
 async function main() {
+  await reset(db, schema);
   console.log("Seeding database...");
 
   // 1) Seed roles

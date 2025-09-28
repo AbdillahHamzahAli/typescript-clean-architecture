@@ -1,15 +1,15 @@
-import { pgTable, serial, text, timestamp, integer } from "drizzle-orm/pg-core";
+import { pgTable, serial, text, timestamp, integer, uuid } from "drizzle-orm/pg-core";
 import { users } from "./users";
 
 export const posts = pgTable("posts", {
-  id: serial("id").primaryKey(),
+  id: uuid("id").primaryKey(),
   title: text("title").notNull(),
   slug: text("slug").notNull().unique(),
   thumbnail: text("thumbnail").notNull(),
   content: text("content").notNull(),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
-  authorId: integer("author_id")
+  authorId: uuid("author_id")
     .notNull()
     .references(() => users.id),
 });

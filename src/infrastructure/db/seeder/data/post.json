@@ -4,13 +4,13 @@
     "slug": "post-1",
     "thumbnail": "https://via.placeholder.com/150",
     "content": "post 1 content",
-    "authorId": 1
+    "authorId": "3f9cf24c-94a8-476f-9513-53692476af46"
   },
   {
     "title": "post 2",
     "slug": "post-2",
     "thumbnail": "https://via.placeholder.com/150",
     "content": "post 2 content",
-    "authorId": 2
+    "authorId": "2e8cf24c-94a8-476f-9513-53692476af45"
   }
 ]
